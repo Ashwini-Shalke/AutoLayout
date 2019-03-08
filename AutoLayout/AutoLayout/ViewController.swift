@@ -8,65 +8,121 @@
 
 import UIKit
 
+extension UIColor {
+    
+    static var mainPink = UIColor(red: 232/255, green: 68/255, blue: 133/255, alpha: 1)
+}
+
 class ViewController: UIViewController {
 
     let bearImage: UIImageView = {
-        let imageview = UIImageView(image: #imageLiteral(resourceName: "Cat"))
+        let imageview = UIImageView(image:#imageLiteral(resourceName: "bear_first"))
         imageview.translatesAutoresizingMaskIntoConstraints = false
         return imageview
     }()
     
-    let topImageView : UIView = {
+    let topImageContainerView : UIView = {
         let topview = UIView()
-        //topview.backgroundColor = UIColor.blue
         topview.translatesAutoresizingMaskIntoConstraints = false
         return topview
      
     }()
     
     let descriptionTextView: UITextView = {
-        let textView =  UITextView(frame: CGRect.zero)
-        textView.text = "Work is Fun, Join us for more Fun"
-        //textView.font
-        textView.backgroundColor = .green
+        let textView =  UITextView()
+        //textView.text = "Work is Fun, Join us for more Fun"
+        let attributedText = NSMutableAttributedString(string: "Work is fun, join us for more fun", attributes : [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 18)])
+        attributedText.append(NSAttributedString(string: "\n\nAre you ready for loads and loads of fun ? Come lets join our stores for more fun", attributes : [NSAttributedStringKey.font
+            : UIFont.systemFont(ofSize: 13)]))
+        //textView.backgroundColor = .green
+        textView.attributedText = attributedText
+        textView.textAlignment = .center
+        textView.isEditable = false
+        textView.isScrollEnabled = false
         textView.translatesAutoresizingMaskIntoConstraints = false
         return textView
     }()
     
+    let previousButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        //button.backgroundColor = UIColor.darkGray
+        button.setTitleColor(UIColor.darkGray, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        button.setTitle("PREV", for: .normal)
+        return button
+    }()
+    
+    let NextButton : UIButton = {
+       let button = UIButton(type: .system)
+        button.setTitle("NEXT", for: .normal)
+        button.setTitleColor(UIColor.mainPink, for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        return button
+    }()
+    
+    let pageController: UIPageControl = {
+        let pc = UIPageControl()
+        pc.currentPage = 0
+        pc.numberOfPages = 4
+        pc.pageIndicatorTintColor = UIColor.gray
+        pc.currentPageIndicatorTintColor = UIColor.mainPink
+        return pc
+    }()
+
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        //view.addSubview(bearImage)
-        view.addSubview(topImageView)
-        topImageView.addSubview(bearImage)
-        topImageView.addSubview(descriptionTextView)
-        //topImageView.addSubview(bearImage)
-        
+        view.addSubview(topImageContainerView)
+        topImageContainerView.addSubview(bearImage)
+        view.addSubview(descriptionTextView)
+        //view.addSubview(bottomStackView)
+        bottomControlLayout()
         layout()
     }
 
     func layout() {
-        topImageView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-        topImageView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.5).isActive = true
+        topImageContainerView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+        topImageContainerView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.5).isActive = true
         
-        bearImage.centerXAnchor.constraint(equalTo: topImageView.centerXAnchor).isActive = true
-        bearImage.centerYAnchor.constraint(equalTo: topImageView.centerYAnchor).isActive = true
-        bearImage.widthAnchor.constraint(equalToConstant: 100).isActive = true
-        bearImage.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        bearImage.centerXAnchor.constraint(equalTo: topImageContainerView.centerXAnchor).isActive = true
+        bearImage.centerYAnchor.constraint(equalTo: topImageContainerView.centerYAnchor).isActive = true
+        bearImage.widthAnchor.constraint(equalToConstant: 200).isActive = true
+        bearImage.heightAnchor.constraint(equalToConstant: 200).isActive = true
         
-        //descriptionTextView.topAnchor.constraint(equalTo: topImageView.topAnchor, constant: 200).isActive = true
-        //descriptionTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-       // descriptionTextView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        descriptionTextView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 24).isActive = true
+        descriptionTextView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -24).isActive = true
+    //  descriptionTextView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant : 0 ).isActive = true
+        descriptionTextView.topAnchor.constraint(equalTo: topImageContainerView.bottomAnchor).isActive = true
+        
+        
+    }
+    
+    
+   fileprivate func bottomControlLayout(){
+//      let redView =  UIView()
+//      redView.backgroundColor = UIColor.red
 
-        //descriptionTextView.centerYAnchor.constraint(equalTo: view.centerYAnchor, ).isActive = true
+//        let yellowView = UIView()
+//        yellowView.backgroundColor = UIColor.yellow
+    
+//      let greenView = UIView()
+//      greenView.backgroundColor = UIColor.green
+    
+        let bottomStackView = UIStackView(arrangedSubviews: [previousButton,pageController,NextButton])
+        bottomStackView.distribution = UIStackViewDistribution.fillEqually
+        bottomStackView.translatesAutoresizingMaskIntoConstraints = false
         
-        descriptionTextView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 50).isActive = true
-        descriptionTextView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        descriptionTextView.widthAnchor.constraint(equalToConstant: 50).isActive = true
-        descriptionTextView.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        view.addSubview(bottomStackView)
         
+        NSLayoutConstraint.activate([
+            bottomStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            bottomStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            bottomStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            bottomStackView.heightAnchor.constraint(equalToConstant: 50)])
+    
     }
 
 
