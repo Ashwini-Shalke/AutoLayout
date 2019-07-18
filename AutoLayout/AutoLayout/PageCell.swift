@@ -6,10 +6,26 @@
 //  Copyright © 2019 Ashwini shalke. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 class PageCell : UICollectionViewCell{
+    
+    var page: Page? {
+        didSet {
+            guard let unwrappedPage = page else {return}
+            bearImage.image = UIImage(named: unwrappedPage.images)
+            
+            let attributedText = NSMutableAttributedString(string: unwrappedPage.headerText, attributes : [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 18)])
+                attributedText.append(NSAttributedString(string: "\n\n\(unwrappedPage.bodyText)", attributes : [NSAttributedStringKey.font
+                : UIFont.systemFont(ofSize: 13)]))
+            
+            descriptionTextView.attributedText = attributedText
+            descriptionTextView.textAlignment = .center
+            
+            
+            
+        }
+    }
     
 // init
     override init(frame: CGRect) {
@@ -20,21 +36,21 @@ class PageCell : UICollectionViewCell{
     }
     
     
-    let bearImage: UIImageView = {
+   private let bearImage: UIImageView = {
         let imageview = UIImageView(image:#imageLiteral(resourceName: "bear_first"))
         imageview.translatesAutoresizingMaskIntoConstraints = false
         imageview.contentMode = .scaleAspectFit
         return imageview
     }()
     
-    let topImageContainerView : UIView = {
+    private let topImageContainerView : UIView = {
         let topview = UIView()
         topview.translatesAutoresizingMaskIntoConstraints = false
         return topview
         
     }()
     
-    let descriptionTextView: UITextView = {
+   private let descriptionTextView: UITextView = {
         let textView =  UITextView()
         let attributedText = NSMutableAttributedString(string: "Work is fun, join us for more fun", attributes : [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 18)])
         attributedText.append(NSAttributedString(string: "\n\nAre you ready for loads and loads of fun ? Come lets join our stores for more fun", attributes : [NSAttributedStringKey.font

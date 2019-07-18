@@ -8,3 +8,8 @@
 
 import UIKit
 
+struct Page {
+    let images : String
+    let headerText : String
+    let bodyText : String
+}
