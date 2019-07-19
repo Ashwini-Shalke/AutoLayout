@@ -18,13 +18,9 @@ class PageCell : UICollectionViewCell{
             let attributedText = NSMutableAttributedString(string: unwrappedPage.headerText, attributes : [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 18)])
                 attributedText.append(NSAttributedString(string: "\n\n\(unwrappedPage.bodyText)", attributes : [NSAttributedStringKey.font
                 : UIFont.systemFont(ofSize: 13)]))
-            
             descriptionTextView.attributedText = attributedText
             descriptionTextView.textAlignment = .center
-            
-            
-            
-        }
+            }
     }
     
 // init
@@ -62,7 +58,7 @@ class PageCell : UICollectionViewCell{
         textView.translatesAutoresizingMaskIntoConstraints = false
         return textView
     }()
-    
+
     private func layout() {
         topImageContainerView.topAnchor.constraint(equalTo: topAnchor).isActive = true
         topImageContainerView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
