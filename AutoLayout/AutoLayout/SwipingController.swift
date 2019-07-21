@@ -60,6 +60,11 @@ class SwipingController : UICollectionViewController,UICollectionViewDelegateFlo
         collectionView?.scrollToItem(at: indexpath, at: .centeredHorizontally, animated: true)
     }
     
+    override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        let x = targetContentOffset.pointee.x
+        //print(x,view.frame.width, x / view.frame.width)
+        pageController.currentPage = Int(x / view.frame.width)
+    }
     
     private lazy var pageController: UIPageControl = {
         let pc = UIPageControl()
