@@ -11,6 +11,16 @@ import UIKit
 class SwipingController : UICollectionViewController,UICollectionViewDelegateFlowLayout {
     
     
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+            coordinator.animate(alongsideTransition: { (_) in
+            self.collectionViewLayout.invalidateLayout()
+            
+            let indexPath = IndexPath(item: self.pageController.currentPage, section: 0)
+            self.collectionView?.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+        }) { (_) in
+        }
+    }
+    
 //  let imageNames = ["bear_first","heart_second","leaf_third"]
 //  let descriptionText = ["Join use today in our fun and games!", "Subscribe and get coupons on our daily events", "VIP members special services"]
     let pages = [
@@ -112,7 +122,16 @@ class SwipingController : UICollectionViewController,UICollectionViewDelegateFlo
             previousButton.isEnabled = true
             previousButton.setTitleColor(UIColor.darkGray, for: .normal)
         }
-
+        
+        if indexPath.row == pages.count - 1 {
+            NextButton.isEnabled = false
+            NextButton.setTitleColor(UIColor.lightGray, for: .normal)
+            
+        }
+        else {
+            NextButton.isEnabled = true
+            NextButton.setTitleColor(UIColor.mainPink, for: .normal)
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -120,7 +139,8 @@ class SwipingController : UICollectionViewController,UICollectionViewDelegateFlo
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return pages.count
+    return pages.count
+       
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
