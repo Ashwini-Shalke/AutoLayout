@@ -1,6 +1,6 @@
 # Autolayout
 
-Auto Layout is my very first mini project, which I completed successfully with the help of Brian Voong videos. This project is simple and a good start for the beginners. In this we will see how we can swipe pages and  implemment Autolayout. 
+Auto Layout is a mini project, which I completed successfully with the help of Brian Voong videos. This project is simple and a good start for the beginners. In this we will see how we can swipe pages and  implemment Autolayout. 
 
 Here is a brief notes of all the topics which I learnt in this project.
 
